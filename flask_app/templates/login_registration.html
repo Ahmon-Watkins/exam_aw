@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Registration and Login</title>
+</head>
+<body>
+    <div>
+        <h1>Sasquatch Websiting</h1>
+        <h3>Register below if this is your first time.</h3>
+        <div>
+        <form action="/user/register" method="post">
+            <h2>Registration</h2>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div>
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" required>
+    
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" required>
+    
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+    
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+            <input type="submit" value="Register">
+        </form>
+    </div>
+    <div>
+        <h1>Login</h1>
+        <h3>You must know your way around here. Welcome back!</h3>
+        <form action="/login" method="POST">
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br>
+            
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br>
+            
+            <input type="submit" value="Login">
+        </form>
+
+    </div>
+    </div>
+</body>
+</html>

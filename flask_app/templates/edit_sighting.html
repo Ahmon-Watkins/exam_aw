@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Sighting</title>
+</head>
+
+<body>
+    <div>
+        <nav>
+            <div>
+                <h1>Sasquatch Websiting</h1>
+            </div>
+            <div>
+                {% for user in user %}
+                <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                {% endfor %}
+                <a href="/dashboard/{{ session['user_id'] }}">
+                    <button>Dashboard</button>
+                </a>
+
+                <a href="/">
+                    <button>Logout</button>
+                </a>
+            </div>
+        </nav>
+
+        <br>
+        <div>
+            <h2>Edit Sighting</h2>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <!-- form for adding comments -->
+            <form method="POST" action="/edit/{{ sighting.id }}">
+                <label for="location">Location:</label>
+                <input type="text" name="location" value="{{ sighting.location }}" required>
+                <br>
+                <label for="what_happened">What Happened:</label>
+                <textarea name="what_happened" required>{{ sighting.what_happened }}</textarea>
+                <br>
+                <label for="date_of_sighting">Date of Sighting:</label>
+                <input type="date" name="date_of_sighting" value="{{ sighting.date_of_sighting }}" required>
+                <br>
+                <label for="sasquatch_count">Sasquatch Count:</label>
+                <input type="number" name="sasquatch_count" value="{{ sighting.sasquatch_count }}" required>
+                <br>
+                <button type="submit">Report</button>
+            </form>
+            
+
+        </div>
+
+</body>
+
+</html>

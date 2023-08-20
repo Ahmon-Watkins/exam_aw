@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>New Sighting</title>
+</head>
+
+<body>
+    <div>
+        <nav>
+            <div>
+                <h1>Sasquatch Websiting</h1>
+            </div>
+            <div>
+                {% for user in user %}
+                <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                {% endfor %}
+                <a href="/dashboard/{{ session['user_id'] }}">
+                    <button>Dashboard</button>
+                </a>
+
+                <a href="/">
+                    <button>Logout</button>
+                </a>
+            </div>
+        </nav>
+
+        <br>
+        <div>
+            <h2>New Sighting</h2>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form action="/create/sighting" method="post">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required>
+                
+                <label for="what_happened">What happened:</label>
+                <input type="text" id="what_happened" name="what_happened" required>
+                
+                <label for="date_of_sighting">Date of Sighting:</label>
+                <input type="date" id="date_of_sighting" name="date_of_sighting" required>
+                
+                <label for="sasquatch_count"># of Sasquatches:</label>
+                <input type="number" id="sasquatch_count" name="sasquatch_count" required>
+                
+                <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+            
+                <button type="submit">Report</button>
+                
+
+
+            </form>
+
+        </div>
+
+</body>
+
+</html>

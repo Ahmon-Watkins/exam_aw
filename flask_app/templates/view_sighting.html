@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>View Sighting</title>
+</head>
+
+<body>
+    <div>
+        <nav>
+            <div>
+                <h1>Sasquatch Websiting</h1>
+            </div>
+            <div>
+                {% if 'user_id' in session %}
+                <a href="/dashboard/{{ session['user_id'] }}">
+                    <button>Dashboard</button>
+                </a>
+                <a href="/logout">
+                    <button>Logout</button>
+                </a>
+                {% else %}
+                <a href="/">
+                    <button>Login</button>
+                </a>
+                {% endif %}
+            </div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div>
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        </nav>
+    </div>
+
+    <div>
+        <h2>Sighting Details</h2>
+        <div> 
+            <p><strong>Location:</strong> {{ sighting.location }}</p>
+            <p><strong>What Happened:</strong> {{ sighting.what_happened }}</p>
+            <p><strong>Date of Sighting:</strong> {{ sighting.date_of_sighting }}</p>
+            <p><strong>Sasquatch Count:</strong> {{ sighting.sasquatch_count }}</p>
+            <p><strong>Reported by:</strong> {{ sighting.creator.first_name }} {{ sighting.creator.last_name }}</p>
+
+        </div>
+    </div>
+    <div>
+        <h3>Skeptical Users:</h3>
+        <ul>
+            {% for skeptic in skeptics %}
+                <li>{{ skeptic.first_name }} {{ skeptic.last_name }}</li>
+            {% endfor %}
+        </ul>
+        <form method="POST" action="/add_skeptic/{{ sighting.id }}">
+            <button type="submit">I'm Skeptical</button>
+        </form>
+    </div>
+    <div>
+        {% if not user_is_skeptical %}
+        <form method="POST" action="/remove_skeptic/{{ sighting.id }}">
+            <button type="submit">I Believe</button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+
+</html>

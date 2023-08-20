@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <div>
+        <nav>
+            <div>
+                <h1>Sasquatch Websiting</h1>
+            </div>
+            <div>
+
+                {% for user in user %}
+                <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                {% endfor %}
+                <a href="/new/sighting">
+                    <button>Report a sighting</button>
+                </a>
+                <a href="/">
+                    <button>Logout</button>
+                </a>
+        
+            </div>
+        </nav>
+        <!-- Scrollable Wall -->
+        <br>
+        <div class="wall">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div>
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+            <div>
+                {% for one_sighting in all_the_sightings %}
+                <div>
+                    <div>
+                        <h4>Skeptics: {{ skeptic_counts[one_sighting.id] }}</h4>
+                        <h5>{{ one_sighting.creator.first_name }} {{ one_sighting.creator.last_name }}</h5>
+                        <h6>{{ one_sighting.location }}</h6>
+                        <p>{{ one_sighting.what_happened }}</p>
+                        <p>{{ one_sighting.date_of_sighting }}</p>
+                        <p>{{ one_sighting.sasquatch_count }}</p>
+                        {% if session.user_id == one_sighting.creator.id %}
+                        <a href="/edit/{{ one_sighting.id }}">
+                            <button>Edit</button>
+                        </a>
+                        <form method="POST" action="/delete/{{ one_sighting.id }}">
+                            <button type="submit">Delete</button>
+                        </form>
+                    {% else %}
+                        <a href="/view/{{ one_sighting.id }}">
+                            <button>View</button>
+                        </a>
+                    {% endif %}
+                
+                    </div>
+                </div>
+                {% else %}
+                <p>No posts available.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
